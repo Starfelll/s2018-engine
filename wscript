@@ -94,6 +94,12 @@ projects={
 		'utils/vtex',
 		'unicode',
 		'video',
+
+		'utils/nvtristriplib',
+		'movieobjects',
+		'mdlobjects',
+		'dmserializers',
+		'utils/studiomdl',
 	],
 	'tests': [
 		'appframework',

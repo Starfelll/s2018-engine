@@ -1,0 +1,112 @@
+#! /usr/bin/env python
+# encoding: utf-8
+
+from waflib import Utils
+import os
+
+top = '.'
+PROJECT_NAME = 'studiomdl'
+
+def options(opt):
+	# stub
+	return
+
+def configure(conf):
+	#conf.define('UTILS', 1)
+	conf.define('PROTECTED_THINGS_DISABLE', 1)
+
+def build(bld):
+
+	src_dir = "../.."
+	source = [
+		"../common/cmdlib.cpp",
+		"collisionmodel.cpp",
+		f"{src_dir}/public/CollisionUtils.cpp",
+		"dmxsupport.cpp",
+		f"{src_dir}/public/filesystem_helpers.cpp",
+		f"{src_dir}/public/filesystem_init.cpp",
+		"../common/FileSystem_Tools.cpp",
+		"HardwareMatrixState.cpp",
+		"HardwareVertexCache.cpp",
+		f"{src_dir}/public/interpolatortypes.cpp",
+		f"{src_dir}/public/mdlobjects/mdlobjects.cpp",
+		f"{src_dir}/public/movieobjects/movieobjects_compiletools.cpp",
+		"mrmsupport.cpp",
+		"objsupport.cpp",
+		"optimize.cpp",
+		"perfstats.cpp",
+		"../common/physdll.cpp",
+		"../common/scriplib.cpp",
+		"simplify.cpp",
+		f"{src_dir}/public/studio.cpp",
+		f"{src_dir}/common/studiobyteswap.cpp",
+		"studiomdl.cpp",
+		"UnifyLODs.cpp",
+		"v1support.cpp",
+		"write.cpp",
+		"checkuv.cpp",
+
+		"../../public/phonemeconverter.cpp",
+
+		f"{src_dir}/public/bone_setup.cpp",
+	]
+
+	includes = [
+		'.',
+		"collisionmodel.h",
+		"FileBuffer.h",
+		"HardwareMatrixState.h",
+		"HardwareVertexCache.h",
+		"../NvTriStripLib/",
+		f"{src_dir}/public/",
+		f"{src_dir}/public/vphysics/",
+		f"{src_dir}/public/appframework/",
+		f"{src_dir}/public/materialsystem/",
+		f"{src_dir}/public/tier0/",
+		f"{src_dir}/common/",
+		"../common/",
+		f"{src_dir}/public/tier3/",
+		f"{src_dir}/public/tier1/",
+		f"{src_dir}/public/mathlib/",
+		f"{src_dir}/public/tier0/",
+		f"{src_dir}/public/vstdlib/"
+	]
+
+	defines = []
+
+	libs = [
+		"appframework",
+		"datamodel",
+		"dmserializers",
+		"mathlib",
+		"mdlobjects",
+		"movieobjects",
+		"nvtristrip",
+		"tier2",
+		"tier3",
+		"tier0",
+		"tier1",
+		"vstdlib",
+	]
+
+	if bld.env.DEST_OS != 'win32':
+		libs += [ 'DL', 'LOG' ]
+	else:
+		libs += ['USER32']
+		pass
+
+	install_path = bld.env.LIBDIR
+
+	bld(
+		source   = source,
+		target   = PROJECT_NAME,
+		name     = PROJECT_NAME,
+		features = 'c cxx cxxprogram',
+		includes = includes,
+		defines  = defines,
+		use      = libs,
+		install_path = install_path,
+		subsystem = "CONSOLE",
+		idx      = bld.get_taskgen_count()
+	)
+

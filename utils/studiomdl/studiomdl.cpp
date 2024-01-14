@@ -2298,7 +2298,8 @@ int Option_Activity( s_sequence_t *psequence )
 int Option_ActivityModifier( s_sequence_t *psequence )
 {
 	GetToken(false);
-	V_strcpy_safe( psequence->activitymodifier[ psequence->numactivitymodifiers++ ].name, token );
+	Assert( 0 );
+	//V_strcpy_safe( psequence->activitymodifier[ psequence->numactivitymodifiers++ ].name, token );
 
 	return 0;
 }

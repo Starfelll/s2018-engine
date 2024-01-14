@@ -1,0 +1,57 @@
+#! /usr/bin/env python
+# encoding: utf-8
+
+from waflib import Utils
+import os
+
+top = '.'
+PROJECT_NAME = 'dmserializers'
+
+def options(opt):
+	return
+
+def configure(conf):
+	conf.define('DMSERIALIZERS_LIB', 1)
+
+
+def build(bld):
+	source = [
+		"dmebaseimporter.cpp",
+		"dmserializers.cpp",
+		"importactbusy.cpp",
+		"importkeyvaluebase.cpp",
+		"importsfmv1.cpp",
+		"importsfmv2.cpp",
+		"importsfmv3.cpp",
+		"importsfmv4.cpp",
+		"importsfmv5.cpp",
+		"importsfmv6.cpp",
+		"importsfmv7.cpp",
+		"importsfmv8.cpp",
+		"importsfmv9.cpp",
+		"importvmf.cpp",
+		"importvmt.cpp",
+	]
+
+	includes = [
+		"../public/dmserializers/",
+		"../public/",
+		"../public/tier0/",
+	]
+
+	defines = []
+
+	libs = ['datamodel', 'filesystem']
+
+	bld.stlib(
+		source   = source,
+		target   = PROJECT_NAME,
+		name     = PROJECT_NAME,
+		features = 'c cxx',
+		includes = includes,
+		defines  = defines,
+		use      = libs,
+		subsystem = bld.env.MSVC_SUBSYSTEM,
+		idx      = bld.get_taskgen_count()
+	)
+
